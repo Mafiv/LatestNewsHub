@@ -13,6 +13,7 @@ export default function App() {
       <RecentNewsProvider>
       <ContentWrapper />
       </RecentNewsProvider>
+      
     </QueryClientProvider>
   );
 }

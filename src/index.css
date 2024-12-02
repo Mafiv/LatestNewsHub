@@ -5,3 +5,30 @@
 body {
   background: #F1F0F0;
 }
+
+.embla__viewpor {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  gap: 2em;
+  position: relative;
+}
+
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  transition: transform 0.3s ease, z-index 0.3s ease;
+  z-index: 1;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+
+@media (min-width: 768px) {
+  .embla__slide {
+    flex: 0 0 50%; /* Breakpoint SM slide covers 50% of the viewport */
+  }
+}

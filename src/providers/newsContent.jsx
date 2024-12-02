@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetch_MainNews, fetch_headline } from "../Service/simpleFetch";
+import { fetch_MainNews, fetch_headline, fetch_mediaStack } from "../Service/simpleFetch";
 
 // Create a context
 export const NewsContext = createContext();
@@ -9,7 +9,9 @@ export const NewsContext = createContext();
 const fetchNews = async () => {
   const trending = await fetch_MainNews();
   const latest = await fetch_headline();
-  return { trending, latest };
+  const mediaStack = await fetch_mediaStack();
+
+  return { trending, latest, mediaStack };
 };
 
 export const RecentNewsProvider = ({ children }) => {
@@ -17,7 +19,7 @@ export const RecentNewsProvider = ({ children }) => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["news"],
     queryFn: fetchNews,
-    staleTime: 1200 * 1000,
+    staleTime: 2400 * 1000,
     refetchOnWindowFocus: false,
     keepPreviousData: true,
   });
@@ -36,9 +38,14 @@ export const RecentNewsProvider = ({ children }) => {
   // console.log(data);
   return (
     <NewsContext.Provider
-      value={{ trending: data.trending, latest: data.latest }}
+      value={{
+        trending: data.trending,
+        latest: data.latest,
+        mediaStack: data.mediaStack,
+      }}
     >
       {children}
     </NewsContext.Provider>
   );
 };
+
